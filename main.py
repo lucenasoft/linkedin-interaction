@@ -64,8 +64,6 @@ class LinkedInInteraction:
             self.save_cookies()
             print('Perfil carregado com sucesso.')
 
-        self.controlled_scroll(scroll_step=450, sleep_time=2)
-
     def invitations_accepted(self):
         self.load_cookies()
         self.driver.get('https://www.linkedin.com/mynetwork/invitation-manager/')
@@ -95,15 +93,31 @@ class LinkedInInteraction:
                 fail_count = 0 
 
             # exibir mais atualizações no feed
-
-            like_button = self.wait_for_element(By.XPATH, '//button[@aria-label="Reagir com gostei"]', 1)
-            see_new_publications = self.wait_for_element(By.XPATH, '//button[text()="Ver novas publicações"]', 1)
-            if like_button and like_button.get_attribute('aria-pressed') == 'false':
-                like_button.click()
-            if see_new_publications:
-                see_new_publications.click()
+            # like_button = self.wait_for_element(By.XPATH, '//button[@aria-label="Reagir com gostei"]', 1)
+            # see_new_publications = self.wait_for_element(By.XPATH, '//button[text()="Ver novas publicações"]', 1)
+            # if like_button and like_button.get_attribute('aria-pressed') == 'false':
+            #     like_button.click()
+            # if see_new_publications:
+            #     see_new_publications.click()
             
+    def like_posts(self):
+        self.load_cookies()
+        self.driver.get('https://www.linkedin.com/feed/')
+        self.controlled_scroll(scroll_step=450, sleep_time=2)
+
+        posts = self.driver.find_elements(By.XPATH, '//button[@aria-label="Reagir com gostei"]')
+        for post in posts:
+            if post.get_attribute('aria-pressed') == 'false':
+                post.click()
+                sleep(2)
+
+        print('Posts curtidos com sucesso.')
+
+    def start(self):
+        self.navigate_to_linkedin()
+        self.login(email, password)
+        self.controlled_scroll(scroll_step=450, sleep_time=2)
+        self.like_posts()
 
 bot = LinkedInInteraction()
-bot.navigate_to_linkedin()
-bot.login(email, password)
+bot.start()
