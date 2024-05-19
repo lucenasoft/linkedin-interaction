@@ -1,16 +1,29 @@
-from time import sleep
 from selenium import webdriver
-from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
+from webdriver_manager.chrome import ChromeDriverManager
+import os
 
-ChromeDriverManager().install()
-driver = webdriver.Chrome()
+email = os.getenv('LINKEDIN_EMAIL')
+password = os.getenv('LINKEDIN_PASSWORD')
 
-driver.get('https://www.linkedin.com/')
-driver.find_element(By.CLASS_NAME, 'nav__button-secondary').click()
+class LinkedInInteraction:
+    def __init__(self):
+        self.driver = self.setup_driver()
 
-driver.find_element(By.NAME ,'session_key').send_keys('your_email')
-driver.find_element(By.NAME, 'session_password').send_keys('your_password')
+    def setup_driver(self):
+        ChromeDriverManager().install()
+        driver = webdriver.Chrome()
+        return driver
 
-sleep(1000)
+    def navigate_to_linkedin(self):
+        self.driver.get('https://www.linkedin.com/')
+        self.driver.find_element(By.CLASS_NAME, 'nav__button-secondary').click()
+
+    def login(self, email, password):
+        self.driver.find_element(By.NAME ,'session_key').send_keys(email)
+        self.driver.find_element(By.NAME, 'session_password').send_keys(password)
+
+# Uso da classe
+bot = LinkedInInteraction()
+bot.navigate_to_linkedin()
+bot.login(email, password)
