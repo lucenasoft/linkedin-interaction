@@ -94,6 +94,8 @@ class LinkedInInteraction:
                 last_height = new_height
                 fail_count = 0 
 
+            # exibir mais atualizações no feed
+
             like_button = self.wait_for_element(By.XPATH, '//button[@aria-label="Reagir com gostei"]', 1)
             see_new_publications = self.wait_for_element(By.XPATH, '//button[text()="Ver novas publicações"]', 1)
             if like_button and like_button.get_attribute('aria-pressed') == 'false':
