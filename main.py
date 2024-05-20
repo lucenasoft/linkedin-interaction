@@ -92,6 +92,8 @@ class LinkedInInteraction:
                 last_height = new_height
                 fail_count = 0 
 
+            self.like_posts()
+
             # exibir mais atualizações no feed
             # like_button = self.wait_for_element(By.XPATH, '//button[@aria-label="Reagir com gostei"]', 1)
             # see_new_publications = self.wait_for_element(By.XPATH, '//button[text()="Ver novas publicações"]', 1)
@@ -117,7 +119,6 @@ class LinkedInInteraction:
         self.navigate_to_linkedin()
         self.login(email, password)
         self.controlled_scroll(scroll_step=450, sleep_time=2)
-        self.like_posts()
 
 bot = LinkedInInteraction()
 bot.start()
