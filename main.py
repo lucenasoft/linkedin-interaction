@@ -120,5 +120,7 @@ class LinkedInInteraction:
         self.login(email, password)
         self.controlled_scroll(scroll_step=450, sleep_time=2)
 
+## Testando
+
 bot = LinkedInInteraction()
 bot.start()
